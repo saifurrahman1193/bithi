@@ -1,0 +1,93 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Bills;
+
+use App\BillType;
+use App\Transactions;
+use App\TransactionType;
+use Illuminate\Http\Request;
+
+class BillsTransactionsController extends Controller {
+
+	public function bills() {
+
+		return view('billstransactions\bills');
+	}
+
+	public function billInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Bills::create($inputs);
+
+		return redirect(Route('bills'))->with('successMsg', 'New Bill successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function billDelete($billId) {
+		Bills::find($billId)->delete();
+
+		return redirect(Route('bills'))->with('successMsg', 'Bill successfully deleted !!');
+	}
+
+	public function transactions() {
+
+		return view('billstransactions\transactions');
+	}
+	public function transactionInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Transactions::create($inputs);
+
+		return redirect(Route('transactions'))->with('successMsg', 'New Transaction successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function transactionDelete($transactionId) {
+		Transactions::find($transactionId)->delete();
+
+		return redirect(Route('transactions'))->with('successMsg', 'Transaction successfully deleted !!');
+	}
+
+	public function transactionType() {
+
+		return view('billstransactions\transactionType');
+	}
+
+	public function transactionTypeInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = TransactionType::create($inputs);
+
+		return redirect(Route('transactionType'))->with('successMsg', 'New Transaction Type successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function transactionTypeDelete($transactionTypeId) {
+		TransactionType::find($transactionTypeId)->delete();
+
+		return redirect(Route('transactionType'))->with('successMsg', 'Transaction Type successfully deleted !!');
+	}
+
+	public function billType() {
+
+		return view('billstransactions\billType');
+	}
+
+	public function billTypeInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = BillType::create($inputs);
+
+		return redirect(Route('billType'))->with('successMsg', 'New Bill Type successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function billTypeDelete($billTypeId) {
+		BillType::find($billTypeId)->delete();
+
+		return redirect(Route('billType'))->with('successMsg', 'Bill Type successfully deleted !!');
+	}
+
+}

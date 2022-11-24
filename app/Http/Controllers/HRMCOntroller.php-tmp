@@ -1,0 +1,166 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Hr;
+use App\Payroll;
+use App\Suppliers;
+use DB;
+use Illuminate\Http\Request;
+
+class HRMCOntroller extends Controller {
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function hr() {
+		// return view('hrm/hr');
+
+		if (request()->has('employeeId')) {
+
+			$hrdata = Hr::where('employeeId', request('employeeId'))->first();
+			return view('hrm/hr', compact('hrdata'));
+		} else {
+
+			$hrdata = Hr::where('employeeId', request('employeeId'))->get();
+			return view('hrm/hr', compact('hrdata'));
+
+		}
+
+	}
+
+	public function hrShow($employee) {
+		$employee = DB::table('hr')->where('employee', $employee);
+		//http://localhost:8000/hrm/hr/rima for checking
+
+		return response()->json($employee);
+
+		// return view('hrm/hr', compact('employee'));
+	}
+
+	public function hrInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Hr::create($inputs);
+
+		return redirect(Route('hr'))->with('successMsg', 'New Employee successfully added !!');
+		// return response()->json($inputs);
+		// return response()->json([ 'successMsg' => 'ok' // for status 200]);
+	}
+
+	public function hrUpdate(Request $request, $employeeId) {
+
+		Hr::find($employeeId)->update($request->all());
+
+		return redirect(Route('hr'))->with('successMsg', 'Employee successfully updated !!');
+		// return response()->json($inputs);
+		// return response()->json([ 'successMsg' => 'ok' // for status 200]);
+	}
+
+	public function hrDelete($employeeId) {
+		Hr::find($employeeId)->delete();
+
+		return redirect(Route('hr'))->with('successMsg', 'Employee successfully deleted !!');
+	}
+
+	public function payroll() {
+		return view('hrm/payroll');
+	}
+
+	public function payrollInsert(Request $request) {
+		$inputs = $request->all();
+
+		Payroll::create($inputs);
+
+		return redirect(Route('payroll'))->with('successMsg', 'Payroll successfully added !!');
+	}
+
+	public function payrollDelete($payrollId) {
+		Payroll::find($payrollId)->delete();
+
+		return redirect(Route('payroll'))->with('successMsg', 'Payroll successfully deleted !!');
+	}
+
+	public function supplier() {
+		return view('hrm/supplier');
+	}
+
+	public function supplierInsert(Request $request) {
+		$inputs = $request->all();
+
+		Suppliers::create($inputs);
+
+		return redirect(Route('supplier'))->with('successMsg', 'Supplier successfully added !!');
+	}
+
+	public function supplierDelete($supplierId) {
+		Suppliers::find($supplierId)->delete();
+
+		return redirect(Route('supplier'))->with('successMsg', 'Supplier successfully deleted !!');
+	}
+
+	public function index() {
+		//
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create() {
+		//
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request) {
+		//
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id) {
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id) {
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id) {
+		//
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id) {
+		//
+	}
+}

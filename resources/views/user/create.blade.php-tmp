@@ -1,0 +1,170 @@
+
+{{-- authenticate --}}
+{{-- Restrict with role --}}
+
+{{-- checking if (0 = not admin) if 1 then admin --}}
+{{-- <h1>admin_role_check : {{$admin_role_check}}</h1> --}}
+{{-- @php
+
+	$admin_role_check = DB::table('user_roles_view')
+                               ->where('user_id', auth::user()->id )
+                               ->Where('role_id', 1 )
+                               ->value('role_id');
+@endphp
+
+
+@if ($admin_role_check===null)
+		<script>window.location = "/";</script>
+@endif --}}
+
+
+
+
+
+@extends('layouts.app')
+
+@section('pageTitle', 'Create User')
+
+@section('content')
+    {{-- <h1>add new user</h1>   --}}
+
+
+
+
+
+	{{-- add new user --}}
+	<div class="container">
+
+		{{-- showing error after "add new user" button clicking --}}
+		{{-- showing error after "add new user" button clicking --}}
+		@if ($errors->any())
+			@foreach ($errors->all() as $error)
+				<div class="alert alert-dismissible alert-danger">
+				  <button type="button" class="close" data-dismiss="alert">×</button>
+				  <strong>Oh snap!</strong>
+				  {{$error}}
+				</div>
+			@endforeach
+		@endif
+
+
+
+		{{-- add new user form --}}
+		{{-- add new user form --}}
+
+	    <div class="row">
+	        <div class="col-md-8 col-md-offset-2">
+	            <div class="panel panel-default">
+	                <div class="panel-heading">Add New User</div>
+
+	                <div class="panel-body">
+	                    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/user">
+	                        {{ csrf_field() }}
+
+
+	                        {{-- Upload profile picture --}}
+	                        {{-- Upload profile picture --}}
+	                        {{-- <div class="form-group{{ $errors->has('profile_pic') ? ' has-error' : '' }}">
+	                            <label for="profile_pic" class="col-md-4 control-label">Upload your image</label>
+
+	                            <div class="col-md-6">
+
+	                                <input type="file"  name="profile_pic" value="" placeholder="" >
+
+
+	                                @if ($errors->has('profile_pic'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('profile_pic') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div> --}}
+
+
+
+
+	                        {{-- name --}}
+
+	                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+	                            <label for="name" class="col-md-4 control-label">Name</label>
+
+	                            <div class="col-md-6">
+	                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+	                                @if ($errors->has('name'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('name') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+
+	                        {{-- email --}}
+	                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+	                            <label for="email" class="col-md-4 control-label">E-Mail</label>
+
+	                            <div class="col-md-6">
+	                                <input id="email" type="email" class="form-control" name="email" value="" required>
+
+	                                @if ($errors->has('email'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('email') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+
+	                        {{-- password --}}
+	                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+	                            <label for="password" class="col-md-4 control-label">Password</label>
+
+	                            <div class="col-md-6">
+	                                <input id="password" type="password" class="form-control" name="password" required>
+
+	                                @if ($errors->has('password'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('password') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+
+	                        <div class="form-group">
+	                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+	                            <div class="col-md-6">
+	                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+	                            </div>
+	                        </div>
+
+
+
+
+
+
+
+
+	                        <div class="form-group">
+	                            <div class="col-md-6 col-md-offset-4">
+	                                <button type="button" class="btn btn-primary">
+	                                    Cancel
+	                                </button>
+
+	                                <button type="submit" class="btn btn-primary">
+	                                    Add New User
+	                                </button>
+	                            </div>
+	                        </div>
+
+
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	{{-- end add new user  --}}
+
+
+
+@endsection

@@ -1,0 +1,124 @@
+@extends('layouts.app')
+@extends('layouts.navbar')
+@extends('layouts.sidebar')
+
+
+
+
+@section('pageTitle', 'Dashboard')
+
+@section('page_content')
+
+
+<style type="text/css" media="screen">
+
+    a{
+          text-decoration: none;
+          color: black;
+    }
+    a:hover{
+          text-decoration: none;
+    }
+    img{
+      max-width: 154px;
+    }
+    .card-title{
+      text-align: center;
+    }
+</style>
+
+<div class="content-wrapper" style="min-height: 0px;">
+
+    <div class="row" style="margin-top: 10px;">
+
+            <div class="col-md-6 grid-margin">
+              <a href="{{ route('hr') }}">
+
+                <div class="card">
+                  <div class="d-flex align-items-center justify-content-md-center">
+                      <img src="{{ asset('images\modules\hrm.png') }}" alt="warranty image" >
+
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-title">HRM</h4>
+
+                  </div>
+                        </div>
+              </a>
+            </div>
+
+
+            <div class="col-md-6 col-lg-6 grid-margin ">
+              <a href="{{ route('inventory') }}">
+
+              <div class="card">
+                <div class="d-flex align-items-center justify-content-md-center">
+                    <img src="{{ asset('images\modules\inventory.png') }}" alt="inventory image">
+
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Inventory</h4>
+
+                </div>
+                      </div>
+            </a>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="col-md-6 grid-margin ">
+                <a href="{{ route('bills') }}">
+
+                <div class="card">
+                    <div class="d-flex align-items-center justify-content-md-center">
+                        <img src="{{ asset('images\modules\bill.png') }}" alt="crm image" >
+
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Bill & Transactions</h4>
+
+                    </div>
+                </div>
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-md-6 grid-margin ">
+              <a href="{{-- {{ route('customer') }} --}}">
+
+              <div class="card">
+                <div class="d-flex align-items-center justify-content-md-center">
+                    <img src="{{ asset('images\modules\po.png') }}" alt="cms image" >
+
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">PO</h4>
+
+                </div>
+                      </div>
+            </a>
+            </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@endsection

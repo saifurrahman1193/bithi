@@ -1,0 +1,26 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Inventory extends Model {
+	protected $table = 'inventory';
+
+	protected $primaryKey = 'inventoryId';
+
+	protected $fillable = [
+		'itemId',
+		'supplierId',
+		'quantity',
+		'unitPrice',
+		'unitParam',
+		'totalPrice',
+		'entryDate',
+		'entryPersonId',
+		'updated_at',
+		'created_at'
+
+	];
+
+}

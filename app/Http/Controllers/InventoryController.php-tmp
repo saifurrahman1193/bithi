@@ -1,0 +1,88 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Category;
+
+use App\Inventory;
+use App\Item;
+use Illuminate\Http\Request;
+
+class InventoryController extends Controller {
+
+	public function inventory() {
+
+		return view('inventory/inventory');
+	}
+
+	public function inventoryInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Inventory::create($inputs);
+
+		return redirect(Route('inventory'))->with('successMsg', 'New Inventory successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function inventoryDelete($inventoryId) {
+		Inventory::find($inventoryId)->delete();
+
+		return redirect(Route('inventory'))->with('successMsg', 'Inventory successfully deleted !!');
+	}
+
+	public function category() {
+
+		$category = Category::all();
+
+		return view('inventory/category', compact('category'));
+	}
+
+	public function categoryInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Category::create($inputs);
+
+		return redirect(Route('category'))->with('successMsg', 'New Category successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function categoryDelete($categoryId) {
+		Category::find($categoryId)->delete();
+
+		return redirect(Route('category'))->with('successMsg', 'Category successfully deleted !!');
+	}
+
+	public function items() {
+
+		// $items = Item::all();
+
+		// return view('inventory/items', compact('items'));
+		return view('inventory/items');
+	}
+
+	public function itemsInsert(Request $request) {
+		$inputs = $request->all();
+
+		$inputs = Item::create($inputs);
+
+		return redirect(Route('items'))->with('successMsg', 'New item successfully added !!');
+		// return response()->json($inputs);
+	}
+
+	public function itemDelete($itemId) {
+		Item::find($itemId)->delete();
+
+		return redirect(Route('items'))->with('successMsg', 'Item successfully deleted !!');
+	}
+
+
+	public function inventorySettings()
+    {
+
+        $categoryData = DB::table('category_view')->get();
+        $itemData = DB::table('item_billdtls_view')->get();
+
+        return view('inventory/inventorySettings', compact('categoryData', 'itemData'));
+    }
+
+}

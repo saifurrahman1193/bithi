@@ -1,0 +1,173 @@
+{{-- authenticate --}}
+{{-- Restrict with role --}}
+
+{{-- checking if (0 = not admin) if 1 then admin --}}
+{{-- <h1>admin_role_check : {{$admin_role_check}}</h1> --}}
+{{-- @php
+
+  $admin_role_check = DB::table('user_roles_view')
+                               ->where('user_id', auth::user()->id )
+                               ->Where('role_id', 1 )
+                               ->value('role_id');
+
+@endphp
+
+
+@if ($admin_role_check===null)
+    <script>window.location = "/";</script>
+@endif --}}
+
+
+
+
+
+
+@extends('layouts.app')
+
+@section('pageTitle', 'User List')
+
+
+@section('content')
+
+    <div class="container">
+
+
+      {{-- search Field --}}
+      {{-- search Field --}}
+      {{-- search Field --}}
+      {{-- Live search in Laravel using AJAX --}}
+      {{-- https://www.youtube.com/watch?v=ld5HwiENA8k --}}
+
+      {{-- <div class="panel-body">
+          <div class="form-group input-group">
+
+              <form  method="get" >
+                {{ csrf_field() }}
+                <input type="search" name="q" id="q"
+                      placeholder="Search Users.." class="form-control"
+                      >
+              </form>
+
+              <span class="input-group-btn">
+                <p>Search icon on a button:
+                  <button type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span> Search
+                  </button>
+                </p>
+              </span>
+          </div>
+      </div> --}}
+
+
+
+
+
+        {{-- message alert --}}
+        {{-- message alert --}}
+        @if (session('successMsg'))
+
+
+            <div class="alert alert-success" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ session('successMsg') }}
+            </div>
+
+
+        @endif
+
+
+
+
+
+
+
+
+
+
+   </div>
+
+
+
+   <div class="content-wrapper" style="min-height: 0px;">
+    <div class="card">
+      <div class="card-body">
+
+
+        {{-- top side of the table --}}
+
+        <h4 class="card-title" style="text-align: center;">User List</h4>
+        {{--user table retrieving--}}
+           {{--user table retrieving--}}
+
+           <a href="{{ route('user.create') }}" class="btn btn-default " style="margin-bottom: 10px; "><span>+ Create New User</span></a>
+
+           <table id="datatable1" class="table table-bordered  table-striped table-hover ">
+              <thead >
+              <tr class="bg-primary ">
+                <th class="text-center">#</th>
+                <th class="text-center" >Name</th>
+                <th class="text-center">Email</th>
+
+                <th colspan="2"  class="text-center">Action</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              @foreach ($users as $user)
+                  <tr>
+                      {{-- <td>{{$user->id}}</td> --}} {{-- ->column_name_from_database --}}
+                      <td>{{$loop->index+1}}</td> {{-- ->column_name_from_database --}}
+                      <td>{{$user->name}}</td>
+                      <td>{{$user->email}}</td>
+
+
+                      {{-- Action --}}
+                      <td>
+                            <a href=" {{ route('user.edit', $user->id) }}"><i class="material-icons text-center">edit</i></a>
+                            {{-- <a ><i class="material-icons disabled">more_vert</i></a> --}}
+                      </td>
+                      <td>
+                            <form  method="post" action="/user/{{$user->id}}" >
+                              {{ csrf_field() }}
+
+                                <input type="hidden" name="_method" value="DELETE">
+
+                                <button type="submit" value="DELETE" class="btn-link">
+                                    <i class="material-icons danger" style="color: #ED5E68">delete</i>
+                                </button>
+                            </form>
+                      </td>
+
+                  </tr>
+
+
+                  {{-- profile pic --}}
+                  {{-- profile pic --}}
+
+                  {{-- <tr>
+                    <td colspan="10">
+                      <img src="{{ asset($user->profile_pic) }}" alt="alternate text" />
+                    </td>
+                  </tr> --}}
+
+
+
+              @endforeach
+
+              </tbody>
+            </table>
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+@endsection
+

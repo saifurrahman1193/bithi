@@ -1,0 +1,309 @@
+@extends('layouts.app')
+@extends('layouts.navbar')
+@extends('layouts.sidebar')
+
+
+
+
+@section('pageTitle', 'Supplier')
+
+@section('page_content')
+
+
+
+
+
+
+
+<div class="content-wrapper" style="min-height: 0px;">
+
+  {{-- Notification --}}
+    {{-- Notification --}}
+    @if (session('successMsg'))
+
+
+      <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ session('successMsg') }}
+      </div>
+
+
+    @endif
+
+
+          <div class="card">
+            <div class="card-body">
+
+
+
+				{{-- top side of the table --}}
+
+				<h4 class="card-title" style="text-align: center;">Supplier</h4>
+
+
+
+
+
+
+
+
+
+          <form class="form-sample" id="supplier_insert_form" method="POST" enctype="multipart/form-data" action="{{ route('supplier.insert') }}">
+
+                          {{ csrf_field() }}
+
+                  <br>
+                    <p class="card-description">
+                      {{-- Personal info --}}
+                    </p>
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Department</label>
+                            <div class="col-sm-8">
+                              {{-- <input type="text" id="designationId" name="designationId" class="form-control"> --}}
+
+
+                              {{-- dynamic select/dropdown --}}
+                                <select class="form-control m-bot15" name="departmentId" required>
+                                      <option value="">--Select One--</option>
+
+                                        @foreach(DB::table('department')->get() as $department)
+                                            <option value="{{ $department->departmentId }}" >
+                                              {{ title_case($department->department) }}
+                                            </option>
+                                            @endforeach
+
+
+                                </select>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Supplier Title</label>
+                            <div class="col-sm-8">
+                              <input type="text" id="supplierTitle" name="supplierTitle" class="form-control" required>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Years Of Experience</label>
+                            <div class="col-sm-8">
+                              <input type="number" id="yearsOfExperience" name="yearsOfExperience" class="form-control" required>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Reference</label>
+                            <div class="col-sm-8">
+                              <input type="text" id="reference" name="reference" class="form-control" required>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+                          <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Remarks</label>
+                            <div class="col-sm-8">
+                              <textarea class="form-control" id="remarks" name="remarks" rows="3"></textarea>
+
+
+                            </div>
+                          </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="col-md-12 text-center mt-4">
+
+
+
+                      {{-- <button type="submit" class="btn btn-success mr-2">Save</button> --}}
+                      {{-- <button class="btn btn-light" onclick="formClearFunction()">Clear</button> --}}
+                      <input type="submit" class="btn btn-success mr-2"  value="Save">
+                      <input type="button" class="btn btn-danger" onclick="formClearFunction()" value="Clear">
+                  </div>
+
+
+                  </form>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+<div class="content-wrapper" style="min-height: 0px;">
+  <div class="card">
+    <div class="card-body">
+
+        {{-- top side of the table --}}
+
+        <h4 class="card-title" style="text-align: center;">Supplier List</h4>
+
+        {{-- <a href="{{ route('createproduct') }}" class="btn btn-info " style="margin-bottom: 10px; "><span>Add Service/Product Items</span></a> --}}
+
+
+
+    {{-- data table start --}}
+    {{-- data table start --}}
+    <table id="datatable1" class="table table-striped table-bordered table-hover " >
+          <thead>
+              <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Supplier Title</th>
+                  <th scope="col">Years Of Experience</th>
+                  <th scope="col">Reference</th>
+                  <th scope="col">Remarks</th>
+                  <th scope="col">Action</th>
+              </tr>
+          </thead>
+
+          <tbody>
+               @foreach (DB::table('suppliers')->get() as $suppliers)
+                  <tr>
+                      <td>{{$loop->index+1}}</td>
+                      <td>
+                              @foreach (DB::table('department')->where('departmentId', $suppliers->departmentId)->get() as $department)
+                                {{ $department->department }}
+                              @endforeach
+                       </td>
+                      <td>{{$suppliers->supplierTitle}}</td>
+                      <td>{{$suppliers->yearsOfExperience}}</td>
+                      <td>{{$suppliers->reference}}</td>
+                      <td>{{$suppliers->remarks}}</td>
+                      <td id="tdtableaction">
+
+                          {{-- <form  method="post" action="{{ route('supplier.delete', $user->id) }}/hrm/supplier/{{$suppliers->supplierId}}" >
+                              {{ csrf_field() }}
+
+                              <a href=""><i class="fa fa-edit"></i></a>
+                              <a href=""><i  class="mdi mdi-delete-empty" style="color: red;"></i></a>
+                          </form> --}}
+                            <div class="d-inline-block">
+                              <a href=" {{ route('supplier.show', $suppliers->supplierId) }}"><i class="fa fa-edit"></i></a>
+
+                          </div>
+                          <div class="d-inline-block">
+                              <form  method="post" action="{{ route('supplier.delete', $suppliers->supplierId) }}" >
+                                  {{ csrf_field() }}
+
+                                    <input type="hidden" name="_method" value="DELETE">
+
+                                    <button type="submit" value="DELETE" class="btn btn-link" >
+                                        <i class="mdi mdi-delete-empty" style="color: red;font-size: 25px; "></i>
+                                    </button>
+                                 {{--  <a method="delete" href="{{ route('supplier.delete', $suppliers->supplierId) }}"><i   class="mdi mdi-delete-empty" style="color: red;"></i></a> --}}
+
+
+                              </form>
+                            </div>
+
+                      </td>
+                  </tr>
+                @endforeach
+
+
+
+          </tbody>
+      </table>
+    {{-- data table end --}}
+    {{-- data table end --}}
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+    // form clearing function
+    function formClearFunction() {
+        document.getElementById("supplier_insert_form").reset();
+    }
+
+</script>
+
+
+
+
+
+@endsection
